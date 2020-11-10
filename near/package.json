@@ -1,0 +1,22 @@
+{
+  "name": "near-tutorials",
+  "version": "1.0.0",
+  "description": "Figment Learn tutorials for Near blockchain",
+  "main": "index.js",
+  "scripts": {
+    "1": "node 1_connect_to_node/main.js",
+    "2": "node 2_create_account/main.js",
+    "3": "node 3_query_node/main.js",
+    "4": "node 4_send_transaction/main.js",
+    "5:build": "node asconfig.js",
+    "5": "node 5_contracts/main.js"
+  },
+  "author": "learn@figment.io",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "js-sha256": "^0.9.0",
+    "near-api-js": "^0.32.0",
+    "near-sdk-as": "2.1.0"
+  }
+}
