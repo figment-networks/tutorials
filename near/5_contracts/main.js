@@ -18,7 +18,7 @@ const options = {
   walletUrl:   `https://wallet.${process.env.NEAR_NETWORK}.near.org`,
   helperUrl:   `https://helper.${process.env.NEAR_NETWORK}.near.org`,
   explorerUrl: `https://explorer.${process.env.NEAR_NETWORK}.near.org`,
-  accountId:   "figment-learn.testnet",
+  accountId:   process.env.NEAR_ACCOUNT,
   deps: {
     keyStore: keyStore
   }
