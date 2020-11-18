@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <script type="text/javascript" async="true" src="./lib.js"></script>
+    <link href="./style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div id="widget-content">
+        <h2>Transactions</h2>
+        <div id="transactions-typebox">
+            <div>
+                <label><input type="checkbox" name="type" value="send" >send</label>
+            </div>
+
+            <div>
+                <label><input type="checkbox" name="type" value="begin_unbonding">begin_unbonding</label>
+                <label><input type="checkbox" name="type" value="edit_validator">edit_validator</label>
+                <label><input type="checkbox" name="type" value="create_validator">create_validator</label>
+                <label><input type="checkbox" name="type" value="delegate">delegate</label>
+                <label><input type="checkbox" name="type" value="begin_redelegate">begin_redelegate</label>
+            </div>
+
+            <div>
+                <label><input type="checkbox" name="type" value="withdraw_delegator_reward">withdraw_delegator_reward</label>
+                <label><input type="checkbox" name="type" value="withdraw_validator_commission">withdraw_validator_commission</label>
+                <label><input type="checkbox" name="type" value="set_withdraw_address">set_withdraw_address</label>
+                <label><input type="checkbox" name="type" value="fund_community_pool">fund_community_pool</label>
+            </div>
+        </div>
+        <div id="transactions-container"></div>
+        <div id="transactions-more">Load More</div>
+    </div>
+
+    <template id="transactionRow">
+        <div class="transaction">
+            <div class="transaction-head">
+                <div class="height"></div>
+                <div class="hash"><a></a></div>
+                <div class="block"><a></a></div>
+                <div class="humanTime"></div>
+            </div>
+            <em class="memo"></em>
+            <div class="events"></div>
+        </div>
+    </template>
+
+    <template id="eventRow">
+        <div class="event">
+            <div class="sub"></div>
+        </div>
+    </template>
+
+    <template id="subRow">
+        <h3 class="type"></h3>
+        <div class="module-element"></div>
+    </template>
+
+    <template id="accountRow">
+        <div class="account">
+            <div class="id"></div>
+            <div class="amount"></div>
+        </div>
+    </template>
+
+    <template id="bankElem">
+        <div class="senders"><h4></h4></div>
+        <div class="recipients"><h4></h4></div>
+    </template>
+
+    <template id="distributionElem">
+        <div class="recipients"><h4></h4></div>
+        <div class="delegator"><h4></h4></div>
+        <div class="withdraw"><h4></h4></div>
+        <div class="validator"><h4></h4></div>
+    </template>
+
+    <template id="stakingElem">
+        <div class="params">
+            <div class="validator_source"><h4></h4></div>
+            <div class="validator_destination"><h4></h4></div>
+            <div class="delegator"><h4></h4></div>
+            <div class="validator"><h4></h4></div>
+        </div>
+        <div class="amount"><h4></h4></div>
+    </template>
+
+    <script type="text/javascript">
+        sr = new SearchRequest("cosmos", 30);
+
+        const now = Date.now();
+        sr.timeAfter(new Date(now - (1000 * 3600 * 24 * 7))); // a week ago
+        sr.timeBefore(new Date(now));
+
+        w = new Widget("transactions-container", sr);
+        w.setRequest("http://localhost:8080");
+        w.liveDates();
+        w.initialRequest();
+        w.attachEvents();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+  color: rgb(36, 42, 49);
+}
+
+#widget-content {
+  display: block;
+  width: 50%;
+  margin-left: 25%;
+}
+
+#transactions-typebox {
+  padding: 2rem;
+  border-bottom: 1px rgb(201, 201, 201) solid;
+}
+
+#transactions-more {
+  text-align: right;
+  color: rgb(36, 42, 49);
+  font-weight: bold;
+}
+
+#widget-content h2 {
+  display: block;
+  width: 100%;
+  background-color: rgb(235, 203, 0);
+  padding: 1rem;
+}
+
+#transactions-container .transaction {
+  display: block;
+  border-bottom: 1px rgb(201, 201, 201) solid;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  margin-left: 1rem;
+}
+
+#transactions-container .transaction-head * {
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+#transactions-container .transaction-head a {
+  color: rgb(36, 42, 49);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#transactions-container .transaction {
+  display: block;
+}
+
+#transactions-container .transaction .memo {
+  display: none;
+}
+
+#transactions-container .transaction .filled {
+  display: block;
+  padding: 1rem;
+}
+
+#transactions-container .transaction .sub {
+  margin: 2rem;
+}
+
+#transactions-container .transaction .sub .module-element {
+  margin-left: 2rem;
+}
+
+.bank .senders {
+  width: 45%;
+  display: inline-block;
+}
+
+.bank .recipients {
+  width: 45%;
+  display: inline-block;
+}
+
+.bank .amount {
+  margin-left: 3rem;
+}
+
+.staking .params div {
+  display: none;
+}
+
+.staking .params .visible {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.staking .params .visible div,
+.staking .params .visible h4 {
+  display: block;
+}
+
+.distribution div {
+  width: 32%;
+  display: inline-block;
+}
