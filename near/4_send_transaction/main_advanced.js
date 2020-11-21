@@ -1,7 +1,7 @@
 // Load environment variables
 require("dotenv").config();
 
-// Load Near SDK components
+// Load NEAR components
 const near = require("near-api-js");
 const { sha256 } = require("js-sha256");
 const fs = require("fs");
