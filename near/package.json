@@ -8,8 +8,9 @@
     "2": "node 2_create_account/main.js",
     "3": "node 3_query_node/main.js",
     "4": "node 4_send_transaction/main.js",
-    "5:build": "node asconfig.js",
-    "5": "node 5_contracts/main.js"
+    "4:advanced": "node 4_send_transaction/main_advanced.js",
+    "5": "node 5_contracts/main.js",
+    "5:build": "node asconfig.js"
   },
   "author": "learn@figment.io",
   "license": "ISC",
