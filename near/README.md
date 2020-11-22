@@ -5,7 +5,7 @@ the official javascript SDK.
 
 ## Requirements
 
-- Node.js 10+
+- Node.js 12+
 
 ## Overview
 
