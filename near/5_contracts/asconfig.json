@@ -1,0 +1,7 @@
+{
+  "extends": "near-sdk-as/asconfig.json",
+  "options": {
+    "measure": true,
+    "binaryFile": "./contract.wasm"
+  }
+}

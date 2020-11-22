@@ -10,7 +10,7 @@
     "4": "node 4_send_transaction/main.js",
     "4:advanced": "node 4_send_transaction/main_advanced.js",
     "5": "node 5_contracts/main.js",
-    "5:build": "node asconfig.js"
+    "5:build": "npx asb --baseDir=5_contracts"
   },
   "author": "learn@figment.io",
   "license": "ISC",
@@ -18,6 +18,6 @@
     "dotenv": "^8.2.0",
     "js-sha256": "^0.9.0",
     "near-api-js": "^0.32.0",
-    "near-sdk-as": "2.1.0"
+    "near-sdk-as": "^2.1.0"
   }
 }

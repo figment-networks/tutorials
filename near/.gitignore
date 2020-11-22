@@ -1,5 +1,7 @@
 node_modules
 credentials
-.env
+build
 neardev
+.env
 *.wasm
+
