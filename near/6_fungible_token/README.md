@@ -16,7 +16,7 @@ Before starting make sure you get a first steps with Rust:
 + In this tutorial we will use `make` to execute commands.
 + Once you installed Rust we need to add Web Assembly target compilation. By default Rust installs a native target for your CPU. We want to produce WASM code instead:
 
-        rustup target add wasm32-unknown-unknown
+      rustup target add wasm32-unknown-unknown
 
 ## Creating a project
 
@@ -26,12 +26,12 @@ We start with creating a Cargo project. Cargo is the Rust package manager and pr
 
 This will create a `Cargo.toml` file which is a config file for your project. It contains information about project name, author, version, dependencies, compilation option and many more. Open and edit the file (In the comments you will find description about ):
 
-```
+```toml
 [package]
 name = "fungible_token"
 version = "0.1.0"
 authors = ["Your Name <email@example.com>"]
-#
+# Rust language edition
 edition = "2018"
 
 # A Rust project can be compiled as a lib or as an executable. Smart contract are not
