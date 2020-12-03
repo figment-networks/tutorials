@@ -1,0 +1,28 @@
+[package]
+name = "fungible_token"
+version = "0.1.0"
+authors = ["Your Name <email@example.com>"]
+#
+edition = "2018"
+
+# A Rust project can be compiled as a lib or as an executable. Smart contract are not
+# executable - it's a library code run by the NEAR WASM runtime. The instructions below
+# instruments cargo to produce a static library.
+# More information: https://doc.rust-lang.org/reference/linkage.html
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+# Here we list dependencies. near-sdk will already provide us everything we need to build
+# a smart contract
+[dependencies]
+near-sdk = "2.0.0"
+
+# compilation profile for a release target
+[profile.release]
+codegen-units = 1
+# optimize for binary size ("z" would additionally turn off loop vectorization)
+opt-level = "s"
+# link time optimization
+lto = true
+debug = false
+panic = "abort"
