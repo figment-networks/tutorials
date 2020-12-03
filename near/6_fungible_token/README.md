@@ -14,7 +14,7 @@ Before starting make sure you get a first steps with Rust:
 + Rust compiler is accessible (type `rustc`) - if not you have to [configure](https://www.rust-lang.org/tools/install) the PATH environment variable.
 + Get familiar with Rust, eg: [Learn Rust in 20 minutes](https://learnxinyminutes.com/docs/rust/). Look [here](https://www.rust-lang.org/learn) for more resources.
 + In this tutorial we will use `make` to execute commands.
-+ Once you installed Rust we need to add Web Assembly target compilation. By default Rust installs a native target for your CPU. We want to produce WASM code instead:
++ Once Rust is installed in our system, we need to add Web Assembly target compilation. By default Rust installs a native target for your CPU. We want to produce WASM code instead:
 
       rustup target add wasm32-unknown-unknown
 
@@ -87,7 +87,7 @@ TODO: describe numbers and arithmetic operations and exceptions. Explain why we 
 
 Below we introduce the NEP-21 interface with function description.
 
-```
+```rust
 /// Increments the `allowance` for `escrow_account_id` by `amount` on the account of the caller of this contract
 /// (`predecessor_id`) who is the balance owner.
 /// Requirements:
