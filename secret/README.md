@@ -25,6 +25,7 @@ to test locally copy .env.local.example, and for testnet copy .env.testnet.examp
 * `npm run 1` - Connecting to node tutorial 
 * `npm run 2` - Creating account tutorial 
 * `npm run 3` - Query node tutorial 
-* `npm run 4` - Send transaction
+* `npm run 4` - Send tokens
+* `npm run 4:advanced` - Send transaction - advanced
 * `npm run 5` - Create, deploy and use a Secret Contract
 * `cd 6_wallets/keplr && npm i && npm run dev` - Keplr wallet
