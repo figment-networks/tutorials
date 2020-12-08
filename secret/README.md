@@ -29,3 +29,4 @@ to test locally copy .env.local.example, and for testnet copy .env.testnet.examp
 * `npm run 4:advanced` - Send transaction - advanced
 * `npm run 5` - Create, deploy and use a Secret Contract
 * `cd 6_wallets/keplr && npm i && npm run dev` - Keplr wallet
+* `npm run 7` - SNIP-20 token.  Creating and using fungible tokens

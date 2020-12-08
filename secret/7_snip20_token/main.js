@@ -88,7 +88,7 @@ const { fromUtf8 } = require("@iov/encoding");
     response = await client.execute(contractAddress, handleMsg);
     console.log('response: ', response);
 
-    // We need to convert the UTF8 bytes to String, before parsing the JSON for the api key.
+    // Convert the UTF8 bytes to String, before parsing the JSON for the api key.
     const apiKey = JSON.parse(fromUtf8(response.data)).create_viewing_key.key;
 
     // Query balance with the api key
