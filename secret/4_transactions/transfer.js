@@ -4,13 +4,6 @@ const {
 
 require('dotenv').config();
 
-const customFees = {
-    send: {
-        amount: [{ amount: "80000", denom: "uscrt" }],
-        gas: "80000",
-    },
-}
-
 const main = async () => {
     
     const mnemonic = process.env.MNEMONIC;
@@ -20,11 +13,17 @@ const main = async () => {
     const accAddress = pubkeyToAddress(pubkey, 'secret');
 
     const txEncryptionSeed = EnigmaUtils.GenerateNewSeed();
+    const fees = {
+        send: {
+            amount: [{ amount: "80000", denom: "uscrt" }],
+            gas: "80000",
+        },
+    }
     const client = new SigningCosmWasmClient(
         httpUrl,
         accAddress,
         (signBytes) => signingPen.sign(signBytes), 
-        txEncryptionSeed, customFees
+        txEncryptionSeed, fees
     );
     const rcpt = accAddress; // Set recipient to sender for testing
 

@@ -40,17 +40,17 @@ const main = async () => {
   const pubkey = encodeSecp256k1Pubkey(signingPen.pubkey);
 
   // get the wallet address
-  const walletAddress = pubkeyToAddress(pubkey, 'secret');
+  const accAddress = pubkeyToAddress(pubkey, 'secret');
 
   const txEncryptionSeed = EnigmaUtils.GenerateNewSeed();
   
   const client = new SigningCosmWasmClient(
       httpUrl,
-      walletAddress,
+      accAddress,
       (signBytes) => signingPen.sign(signBytes),
       txEncryptionSeed, customFees
   );
-  console.log(`Wallet address=${walletAddress}`)
+  console.log(`Wallet address=${accAddress}`)
   
   // Upload the wasm of a simple contract
   const wasm = fs.readFileSync("5_contracts/contract.wasm");

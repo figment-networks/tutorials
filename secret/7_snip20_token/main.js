@@ -41,17 +41,17 @@ const { fromUtf8 } = require("@iov/encoding");
     const pubkey = encodeSecp256k1Pubkey(signingPen.pubkey);
   
     // get the wallet address
-    const walletAddress = pubkeyToAddress(pubkey, 'secret');
+    const accAddress = pubkeyToAddress(pubkey, 'secret');
   
     const txEncryptionSeed = EnigmaUtils.GenerateNewSeed();
     
     const client = new SigningCosmWasmClient(
         httpUrl,
-        walletAddress,
+        accAddress,
         (signBytes) => signingPen.sign(signBytes),
         txEncryptionSeed, customFees
     );
-    console.log(`Wallet address=${walletAddress}`)
+    console.log(`Wallet address=${accAddress}`)
     
     // Upload the wasm of a simple contract
     const wasm = fs.readFileSync("7_snip20_token/contract/contract.wasm");
@@ -67,9 +67,9 @@ const { fromUtf8 } = require("@iov/encoding");
         "symbol":"TST",
         "decimals":6,
         "prng_seed": Buffer.from("Something really random").toString('base64'),
-        "admin": walletAddress,
+        "admin": accAddress,
         "initial_balances": [{
-                "address": walletAddress,
+                "address": accAddress,
                 "amount": "1000000000"
             }
         ]
@@ -83,7 +83,7 @@ const { fromUtf8 } = require("@iov/encoding");
     const entropy = "Another really random thing";
 
 
-    const handleMsg = { create_viewing_key: {entropy: entropy} };
+    let handleMsg = { create_viewing_key: {entropy: entropy} };
     console.log('Creating viewing key');
     response = await client.execute(contractAddress, handleMsg);
     console.log('response: ', response);
@@ -95,12 +95,30 @@ const { fromUtf8 } = require("@iov/encoding");
     const balanceQuery = { 
         balance: {
             key: apiKey, 
-            address: walletAddress
+            address: accAddress
         }
     };
     const balance = await client.queryContractSmart(contractAddress, balanceQuery);
 
     console.log('My token balance: ', balance);
+
+    // Increase allowac
+
+    // Send some tokens
+    handleMsg = {
+        transfer_from: 
+        {
+            owner: accAddress, amount: "1000", recipient: accAddress
+        }
+    };
+
+
+    console.log('Transferring tokens');
+    response = await client.execute(contractAddress, handleMsg);
+    console.log('Transfer response: ', response)
+
+    balance = await client.queryContractSmart(contractAddress, balanceQuery);
+    console.log('New token balance', balance)
   };
   
   main();
