@@ -102,8 +102,6 @@ window.onload = async () => {
 };
 
 document.sendForm.onsubmit = () => {
-    debugger
-    console.log('sending')
     let recipient = document.sendForm.recipient.value;
     let amount = document.sendForm.amount.value;
 
