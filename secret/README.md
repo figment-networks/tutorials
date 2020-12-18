@@ -4,6 +4,7 @@
 * Connecting to Secret Network node using DataHub
 * Creating account using SecretJS
 * Query Secret Network
+* Submitting transactions
 * Using contracts
 
 ## 1. Installation
