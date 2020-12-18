@@ -102,8 +102,6 @@ const { fromUtf8 } = require("@iov/encoding");
 
     console.log('My token balance: ', balance);
 
-    // Increase allowac
-
     // Send some tokens
     handleMsg = {
         transfer_from: 
