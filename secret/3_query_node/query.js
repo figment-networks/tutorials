@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const main = async () => {
   // Create connection to DataHub Secret Network node
-  const client = new CosmWasmClient(process.env.SECRET_NODE_URL)
+  const client = new CosmWasmClient(process.env.SECRET_REST_URL)
 
   // 1. Query node info
   const nodeInfo = await client.restClient.nodeInfo();
@@ -16,8 +16,8 @@ const main = async () => {
   const blocksLatest = await client.restClient.blocksLatest();
   console.log('Latest block: ', blocksLatest);
   
-  // 2.2 Block by number, defaults to latest but lets get one with TXs
-  const blocks = await client.restClient.blocks(398149);
+  // 2.2 Block by number, defaults to latest, lets get block 42
+  const blocks = await client.restClient.blocks(42);
   console.log('Blocks: ', blocks);
 
   // 3. Query account
