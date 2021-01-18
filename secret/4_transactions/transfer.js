@@ -8,7 +8,7 @@ const main = async () => {
   const mnemonic = process.env.MNEMONIC;
   const httpUrl = process.env.SECRET_REST_URL;
   const signingPen = await Secp256k1Pen.fromMnemonic(mnemonic)
-    .catch((err) => { console.error('Could not get signing pen:\n', err); });
+    .catch((err) => { throw new Error(`Could not get signing pen: ${err}`); });
   const pubkey = encodeSecp256k1Pubkey(signingPen.pubkey);
   const accAddress = pubkeyToAddress(pubkey, 'secret');
 
@@ -31,18 +31,16 @@ const main = async () => {
   const memo = 'sendTokens example';
 
   const sent = await client.sendTokens(rcpt, [{ amount: '1234', denom: 'uscrt' }], memo)
-    .catch((err) => { console.error('Could not send tokens:\n', err); });
+    .catch((err) => { throw new Error(`Could not send tokens: ${err}`); });
   console.log('sent', sent);
 
   // Query the tx result
   const query = { id: sent.transactionHash };
   const tx = await client.searchTx(query)
-    .catch((err) => { console.error('Could not execute the search:\n', err); });
+    .catch((err) => { throw new Error(`Could not execute the search: ${err}`); });
   console.log('Transaction: ', tx);
 };
 
-main().then((resp) => {
-  console.log(resp);
-}).catch((err) => {
-  console.log(err);
+main().catch((err) => {
+  console.error(err);
 });

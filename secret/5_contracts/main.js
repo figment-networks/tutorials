@@ -35,7 +35,7 @@ const main = async () => {
   // A pen is the most basic tool you can think of for signing.
   // This wraps a single keypair and allows for signing.
   const signingPen = await Secp256k1Pen.fromMnemonic(mnemonic)
-    .catch((err) => { console.error('Could not get signing pen:\n', err); });
+    .catch((err) => { throw new Error(`Could not get signing pen: ${err}`); });
 
   // Get the public key
   const pubkey = encodeSecp256k1Pubkey(signingPen.pubkey);
@@ -57,7 +57,7 @@ const main = async () => {
   const wasm = fs.readFileSync('5_contracts/contract.wasm');
   console.log('Uploading contract');
   const uploadReceipt = await client.upload(wasm, {})
-    .catch((err) => { console.error('Could not upload contract:\n', err); });
+    .catch((err) => { throw new Error(`Could not upload contract: ${err}`); });
 
   // Get the code ID from the receipt
   const { codeId } = uploadReceipt;
@@ -65,7 +65,7 @@ const main = async () => {
   // Create an instance of the Counter contract, providing a starting count
   const initMsg = { count: 101 };
   const contract = await client.instantiate(codeId, initMsg, `My Counter${Math.ceil(Math.random() * 10000)}`)
-    .catch((err) => { console.error('Could not instantiate contract:\n', err); });
+    .catch((err) => { throw new Error(`Could not instantiate contract: ${err}`); });
   console.log('contract: ', contract);
 
   const { contractAddress } = contract;
@@ -73,7 +73,7 @@ const main = async () => {
   // Query the current count
   console.log('Querying contract for current count');
   let response = await client.queryContractSmart(contractAddress, { get_count: {} })
-    .catch((err) => { console.error('Could not query contract:\n', err); });
+    .catch((err) => { throw new Error(`Could not query contract: ${err}`); });
 
   console.log(`Count=${response.count}`);
 
@@ -81,15 +81,17 @@ const main = async () => {
   const handleMsg = { increment: {} };
   console.log('Updating count');
   response = await client.execute(contractAddress, handleMsg)
-    .catch((err) => { console.error('Could not execute contract:\n', err); });
+    .catch((err) => { throw new Error(`Could not execute contract: ${err}`); });
   console.log('response: ', response);
 
   // Query again to confirm it worked
   console.log('Querying contract for updated count');
   response = await client.queryContractSmart(contractAddress, { get_count: {} })
-    .catch((err) => { console.error('Could not query contract:\n', err); });
+    .catch((err) => { throw new Error(`Could not query contract: ${err}`); });
 
   console.log(`New Count=${response.count}`);
 };
 
-main();
+main().catch((err) => {
+  console.error(err);
+});

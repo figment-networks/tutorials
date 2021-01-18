@@ -12,7 +12,7 @@ const main = async () => {
 
   // This wraps a single keypair and allows for signing.
   const signingPen = await Secp256k1Pen.fromMnemonic(mnemonic)
-    .catch((err) => { console.error('Could not get signing pen:\n', err); });
+    .catch((err) => { throw new Error(`Could not get signing pen: ${err}`); });
 
   // Get the public key
   const pubkey = encodeSecp256k1Pubkey(signingPen.pubkey);
@@ -23,15 +23,13 @@ const main = async () => {
   // Query the account
   const client = new CosmWasmClient(process.env.SECRET_REST_URL);
   const account = await client.getAccount(accAddress)
-    .catch((err) => { console.error('Could not get account:\n', err); });
+    .catch((err) => { throw new Error(`Could not get account: ${err}`); });
 
   console.log('mnemonic: ', mnemonic);
   console.log('address: ', accAddress);
   console.log('account: ', account);
 };
 
-main().then((resp) => {
-  console.log(resp);
-}).catch((err) => {
-  console.log(err);
+main().catch((err) => {
+  console.error(err);
 });

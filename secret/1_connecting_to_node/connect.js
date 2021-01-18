@@ -8,11 +8,11 @@ const main = async () => {
 
   // Query chain ID
   const chainId = await client.getChainId()
-    .catch((err) => { console.error('Could not get chain id:\n', err); });
+    .catch((err) => { throw new Error(`Could not get chain id: ${err}`); });
 
   // Query chain height
   const height = await client.getHeight()
-    .catch((err) => { console.error('Could not get block height:\n', err); });
+    .catch((err) => { throw new Error(`Could not get block height: ${err}`); });
 
   console.log('ChainId:', chainId);
   console.log('Block height:', height);
@@ -20,8 +20,6 @@ const main = async () => {
   console.log('Successfully connected to Secret Network');
 };
 
-main().then((resp) => {
-  console.log(resp);
-}).catch((err) => {
-  console.log(err);
+main().catch((err) => {
+  console.error(err);
 });

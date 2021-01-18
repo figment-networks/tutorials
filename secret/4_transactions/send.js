@@ -39,18 +39,20 @@ const main = async () => {
   };
 
   const chainId = await client.getChainId()
-    .catch((err) => { console.error('Could not get chain id:\n', err); });
-  const { accountNumber, sequence } = await client.getNonce(accAddress);
+    .catch((err) => { throw new Error(`Could not get chain id: ${err}`); });
+  const { accountNumber, sequence } = await client.getNonce(accAddress)
+    .catch((err) => { throw new Error(`Could not get nonce: ${err}`); });
   const signBytes = makeSignBytes([sendMsg], fee, chainId, memo, accountNumber, sequence);
   const signature = await signingPen.sign(signBytes)
-    .catch((err) => { console.error('Could not sign:\n', err); });
+    .catch((err) => { throw new Error(`Could not sign: ${err}`); });
   const signedTx = {
     msg: [sendMsg],
     fee,
     memo,
     signatures: [signature],
   };
-  const { logs, transactionHash } = await client.postTx(signedTx);
+  const { transactionHash } = await client.postTx(signedTx)
+    .catch((err) => { throw new Error(`Could not post tx: ${err}`); });
 
   // Query the tx result
   const query = { id: transactionHash };
@@ -58,8 +60,6 @@ const main = async () => {
   console.log('Transaction: ', tx);
 };
 
-main().then((resp) => {
-  console.log(resp);
-}).catch((err) => {
-  console.log(err);
+main().catch((err) => {
+  console.error(err);
 });
