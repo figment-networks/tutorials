@@ -1,17 +1,18 @@
 const {
-  CosmWasmClient, Secp256k1Pen, pubkeyToAddress, encodeSecp256k1Pubkey
-} = require("secretjs");
+  CosmWasmClient, Secp256k1Pen, pubkeyToAddress, encodeSecp256k1Pubkey,
+} = require('secretjs');
 
-const { Bip39, Random } = require("@iov/crypto");
+const { Bip39, Random } = require('@iov/crypto');
 
 require('dotenv').config();
 
 const main = async () => {
   // Create random address and mnemonic
   const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
-  
+
   // This wraps a single keypair and allows for signing.
-  const signingPen = await Secp256k1Pen.fromMnemonic(mnemonic);
+  const signingPen = await Secp256k1Pen.fromMnemonic(mnemonic)
+    .catch((err) => { console.error('Could not get signing pen:\n', err); });
 
   // Get the public key
   const pubkey = encodeSecp256k1Pubkey(signingPen.pubkey);
@@ -21,15 +22,16 @@ const main = async () => {
 
   // Query the account
   const client = new CosmWasmClient(process.env.SECRET_REST_URL);
-  const account = await client.getAccount(accAddress);
+  const account = await client.getAccount(accAddress)
+    .catch((err) => { console.error('Could not get account:\n', err); });
 
   console.log('mnemonic: ', mnemonic);
   console.log('address: ', accAddress);
   console.log('account: ', account);
-}
+};
 
-main().then(resp => {
+main().then((resp) => {
   console.log(resp);
-}).catch(err => {
+}).catch((err) => {
   console.log(err);
-})
+});
