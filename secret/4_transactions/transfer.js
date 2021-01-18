@@ -12,6 +12,7 @@ const main = async () => {
   const pubkey = encodeSecp256k1Pubkey(signingPen.pubkey);
   const accAddress = pubkeyToAddress(pubkey, 'secret');
 
+  // 1. Initialise client
   const txEncryptionSeed = EnigmaUtils.GenerateNewSeed();
   const fees = {
     send: {
@@ -25,16 +26,19 @@ const main = async () => {
     (signBytes) => signingPen.sign(signBytes),
     txEncryptionSeed, fees,
   );
-  const rcpt = accAddress; // Set recipient to sender for testing
+
+  // 2. Send tokens
+  const rcpt = accAddress; // Set recipient to sender for testing, or generate another account as you did previously.
 
   // optional memo
   const memo = 'sendTokens example';
 
-  const sent = await client.sendTokens(rcpt, [{ amount: '1234', denom: 'uscrt' }], memo)
+  // Send 1 SCRT / 1000000 uscrt
+  const sent = await client.sendTokens(rcpt, [{ amount: '1000000', denom: 'uscrt' }], memo)
     .catch((err) => { throw new Error(`Could not send tokens: ${err}`); });
   console.log('sent', sent);
 
-  // Query the tx result
+  // 3. Query the tx result
   const query = { id: sent.transactionHash };
   const tx = await client.searchTx(query)
     .catch((err) => { throw new Error(`Could not execute the search: ${err}`); });

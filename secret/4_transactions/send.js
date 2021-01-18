@@ -5,6 +5,7 @@ const {
 require('dotenv').config();
 
 const main = async () => {
+  // As in previous tutorial, initialise client from ENV
   const mnemonic = process.env.MNEMONIC;
   const signingPen = await Secp256k1Pen.fromMnemonic(mnemonic)
     .catch((err) => { throw new Error(`Could not get signing pen: ${err}`); });
@@ -12,8 +13,10 @@ const main = async () => {
   const accAddress = pubkeyToAddress(pubkey, 'secret');
   const client = new CosmWasmClient(process.env.SECRET_REST_URL);
 
+  // Optionally, define a memo for the transaction
   const memo = 'My first secret transaction, sending uscrt to my own address';
 
+  // 1. Define TX message
   const sendMsg = {
     type: 'cosmos-sdk/MsgSend',
     value: {
@@ -28,6 +31,7 @@ const main = async () => {
     },
   };
 
+  // 2. Define fees
   const fee = {
     amount: [
       {
@@ -38,6 +42,7 @@ const main = async () => {
     gas: '100000',
   };
 
+  // 3. Sign transaction
   const chainId = await client.getChainId()
     .catch((err) => { throw new Error(`Could not get chain id: ${err}`); });
   const { accountNumber, sequence } = await client.getNonce(accAddress)
@@ -51,10 +56,12 @@ const main = async () => {
     memo,
     signatures: [signature],
   };
+
+  // 4. Broadcast TX
   const { transactionHash } = await client.postTx(signedTx)
     .catch((err) => { throw new Error(`Could not post tx: ${err}`); });
 
-  // Query the tx result
+  // 5. Query TX by hash/ID
   const query = { id: transactionHash };
   const tx = await client.searchTx(query)
     .catch((err) => { throw new Error(`Could not search tx: ${err}`); });

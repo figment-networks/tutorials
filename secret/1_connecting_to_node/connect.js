@@ -1,5 +1,7 @@
+// Load SecretJS components
 const { CosmWasmClient } = require('secretjs');
 
+// Load environment variables
 require('dotenv').config();
 
 const main = async () => {
