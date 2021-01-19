@@ -310,7 +310,7 @@ describe('buy', () => {
 	})
 })
 
-describe('get_market_list', () => {
+describe('get_market', () => {
 	it('return market price for a token', () => {
 		VMContext.setPredecessor_account_id(alice)
 
