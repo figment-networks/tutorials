@@ -281,7 +281,7 @@ describe('remove_from_market', () => {
 		expect(nonSpec.remove_from_market(tokenId)).toBe(true)
 	})
 
-	it('should throw error for nft available in market', () => {
+	it('should throw error for nft not available in market', () => {
 		expect(() => {
 			VMContext.setPredecessor_account_id(alice)
 			// mint new token that return its id
