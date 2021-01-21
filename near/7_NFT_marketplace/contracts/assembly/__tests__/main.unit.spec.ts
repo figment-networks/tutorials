@@ -263,7 +263,7 @@ describe('get_market_price', () => {
 		// set price to be 1 NEAR
 		const price = u128.from('1000000000000000000000000')
 		nonSpec.add_to_market(tokenId, price)
-		// get the first 5 NFTs listed on the market
+		// get the market price of tokenId
 		expect(nonSpec.get_market_price(tokenId)).toBe(price)
 	})
 })
