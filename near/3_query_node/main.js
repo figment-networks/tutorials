@@ -44,8 +44,9 @@ async function main() {
   gasPrice = await provider.sendJsonRpc("gas_price", [null]);
   console.log("gas price:", gasPrice);
 
-  b = await provider.sendJsonRpc("block", { finality: "final" });
-  console.log("gas price:", b);
+  // Get current gas price from the block header
+  const anotherBlock = await provider.sendJsonRpc("block", { finality: "final" });
+  console.log("gas price from header:", anotherBlock.header.gas_price);
 }
 
 main()
