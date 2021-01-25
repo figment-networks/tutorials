@@ -1,0 +1,19 @@
+{
+  "name": "celo-tutorials",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "1": "node 1_connecting_to_node/connect.js",
+    "2": "node 2_creating_account/create_account.js",
+    "3": "node 3_query_node/query.js",
+    "4.1": "node 4_transactions/transfers.js",
+    "4.2": "node 4_transactions/stake.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@celo/contractkit": "^1.0.1",
+    "dotenv": "^8.2.0"
+  }
+}
