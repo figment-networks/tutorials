@@ -14,20 +14,19 @@ const main = async () => {
   client.addAccount(account.privateKey);
 
   // Get contract wrappers
-  const stableToken = await this.contracts.getStableToken()
-  const exchange = await this.contracts.getExchange()
+  const stableToken = await client.contracts.getStableToken()
+  const exchange = await client.contracts.getExchange()
 
   // Get cUSD balance
   const cUsdBalance = await stableToken.balanceOf(account.address)
 
   // Approve a user to transfer StableToken on behalf of another user.
-  const approveTx = await stableToken.approve(exchange.address, cUsdBalance).send()
-  const approveReceipt = await approveTx.waitReceipt()
+  const approveTx = await stableToken.approve(exchange.address, cUsdBalance).send({from: account.address});
+  const approveReceipt = await approveTx.waitReceipt();
 
   // Exchange cUSD for CELO
-  const goldAmount = await exchange.quoteUsdSell(cUsdBalance)
-  const sellTx = await exchange.sellDollar(cUsdBalance, goldAmount).send()
-
+  const goldAmount = await exchange.quoteUsdSell(cUsdBalance);
+  const sellTx = await exchange.sellDollar(cUsdBalance, goldAmount).send({from: account.address})
   const sellReceipt = await sellTx.waitReceipt()
 
   // Print receipts

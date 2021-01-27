@@ -1,23 +1,16 @@
 const { newKit } = require('@celo/contractkit');
 
-require('dotenv').config();
+require('dotenv').config({path: '../.env'});
 
-let client;
+// Create connection to DataHub Celo Network node
+const client = newKit(process.env.REST_URL);
+const web3 = client.web3;
 
-const main = async () => {
-  // Create connection to DataHub Celo Network node
-  client = newKit(process.env.REST_URL);
+// Initialize account from our private key
+const account = web3.eth.accounts.privateKeyToAccount(process.env.PRIVATE_KEY);
 
-  // Initialize account from our private key
-  const account = web3.eth.accounts.privateKeyToAccount(process.env.PRIVATE_KEY);
-
-  // We need to add address to ContractKit in order to sign transactions
-  client.addAccount(account.privateKey);
-};
-
-main().catch((err) => {
-  console.error(err);
-});
+// We need to add address to ContractKit in order to sign transactions
+client.addAccount(account.privateKey);
 
 module.exports = {
   networks: {

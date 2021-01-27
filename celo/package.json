@@ -8,9 +8,11 @@
     "2": "node 2_creating_account/create_account.js",
     "3": "node 3_query_node/query.js",
     "4.1": "node 4_transactions/transfers.js",
-    "4.2": "node 4_transactions/stake.js"
+    "4.2": "node 4_transactions/exchange.js",
+    "5.1": "node 5_contracts/deployment.js",
+    "5.2": "node 5_contracts/interact.js"
   },
-  "author": "",
+  "author": "Bartosz Hejman",
   "license": "ISC",
   "dependencies": {
     "@celo/contractkit": "^1.0.1",

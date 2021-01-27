@@ -1,7 +1,7 @@
 const { newKit } = require('@celo/contractkit');
 const MetaCoin = require('./build/contracts/MetaCoin.json')
 
-require('dotenv').config();
+require('dotenv').config({path: '../.env'});
 
 const main = async () => {
   // Create connection to DataHub Celo Network node

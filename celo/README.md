@@ -9,6 +9,8 @@
 
 ## 1. Installation
 
+Make sure that your Node version is `>10.x`
+
 To install all required packages run:
 
 ```bash
@@ -26,6 +28,7 @@ to test locally copy .env.local.example, and for testnet copy .env.testnet.examp
 * `npm run 1` - Connecting to node tutorial 
 * `npm run 2` - Creating account tutorial 
 * `npm run 3` - Query node tutorial 
-* `npm run 4` - Transfer tokens - simple
-* `npm run 4:advanced` - Transfer tokens - advanced
-* `npm run 5` - Create, deploy and use a Secret Contract
+* `npm run 4:transfer` - Transfer tokens
+* `npm run 4:exchange` - Exchange tokens
+* `npm run 5:deploy` - Deploy smart contract
+* `npm run 5:interact` - Interact with smart contrac

@@ -20,8 +20,8 @@ const main = async () => {
   const amount = 100000
 
   // Get contract wrappers
-  const goldtoken = await kit.contracts.getGoldToken()
-  const stabletoken = await kit.contracts.getStableToken()
+  const goldtoken = await client.contracts.getGoldToken()
+  const stabletoken = await client.contracts.getStableToken()
 
   // Transfer CELO and cUSD from your account to anAddress
   // Specify cUSD as the feeCurrency when sending cUSD
