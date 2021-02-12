@@ -11,7 +11,7 @@ const main = async () => {
   // Initialize account from our private key
   const account = web3.eth.accounts.privateKeyToAccount(process.env.PRIVATE_KEY);
 
-  // We need to add address to ContractKit in order to sign transactions
+  // We need to add private key to ContractKit in order to sign transactions
   client.addAccount(account.privateKey);
 
   // Specify recipient Address
@@ -26,8 +26,10 @@ const main = async () => {
 
   // Transfer CELO and cUSD from your account to anAddress
   // Specify cUSD as the feeCurrency when sending cUSD
-  const celotx = await goldtoken.transfer(recipientAddress, amount).send({from: account.address});
-  const cUSDtx = await stabletoken.transfer(recipientAddress, amount).send({from: account.address, feeCurrency: stabletoken.address});
+  const celotx = await goldtoken.transfer(recipientAddress, amount).send({from: account.address})
+    .catch((err) => { throw new Error(`Could not transfer CELO: ${err}`) });
+  const cUSDtx = await stabletoken.transfer(recipientAddress, amount).send({from: account.address, feeCurrency: stabletoken.address})
+    .catch((err) => { throw new Error(`Could not transfer cUSD: ${err}`) });
 
   // Wait for the transactions to be processed
   const celoReceipt = await celotx.waitReceipt();
