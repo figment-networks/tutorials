@@ -10,7 +10,7 @@ const client = ContractKit.newKitFromWeb3(web3);
 // Initialize account from our private key
 const account = web3.eth.accounts.privateKeyToAccount(process.env.PRIVATE_KEY);
 
-// We need to add address to ContractKit in order to sign transactions
+// We need to add private key to ContractKit in order to sign transactions
 client.addAccount(account.privateKey);
 
 module.exports = {

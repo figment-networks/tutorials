@@ -11,7 +11,7 @@ const main = async () => {
   // Initialize account from our private key
   const account = web3.eth.accounts.privateKeyToAccount(process.env.PRIVATE_KEY);
 
-  // We need to add address to ContractKit in order to sign transactions
+  // We need to add private key to ContractKit in order to sign transactions
   client.addAccount(account.privateKey);
 
   // Get contract wrappers
@@ -19,15 +19,19 @@ const main = async () => {
   const exchange = await client.contracts.getExchange();
 
   // Get cUSD balance
-  const cUsdBalance = await stableToken.balanceOf(account.address);
+  const cUsdBalance = await stableToken.balanceOf(account.address)
+    .catch((err) => { throw new Error(`Could not get cUSD balance: ${err}`) });
 
   // Approve a user to transfer StableToken on behalf of another user.
-  const approveTx = await stableToken.approve(exchange.address, cUsdBalance).send({from: account.address});
+  const approveTx = await stableToken.approve(exchange.address, cUsdBalance).send({from: account.address})
+    .catch((err) => { throw new Error(`Could not send approve transaction: ${err}`) });
   const approveReceipt = await approveTx.waitReceipt();
 
   // Exchange cUSD for CELO
-  const goldAmount = await exchange.quoteUsdSell(cUsdBalance);
+  const goldAmount = await exchange.quoteUsdSell(cUsdBalance)
+    .catch((err) => { throw new Error(`Could not get a quote: ${err}`) });
   const sellTx = await exchange.sellDollar(cUsdBalance, goldAmount).send({from: account.address})
+    .catch((err) => { throw new Error(`Could not send exchange transaction: ${err}`) });
   const sellReceipt = await sellTx.waitReceipt();
 
   // Print receipts
