@@ -13,7 +13,7 @@ const main = async () => {
 
   // 1. Query account balances
   const accountBalances = await client.getTotalBalance(account.address)
-    .catch((err) => { throw new Error(`Could not fetch account: ${err}`); });
+    .catch((err) => { throw new Error(`Could not fetch account: ${err}`) });
 
   console.log('CELO balance: ', accountBalances.CELO.toString(10));
   console.log('cUSD balance: ', accountBalances.cUSD.toString(10));
@@ -22,18 +22,30 @@ const main = async () => {
 
   // 2. Query node info
   const nodeInfo = await web3.eth.getNodeInfo()
-    .catch((err) => { throw new Error(`Could not fetch node info: ${err}`); });
+    .catch((err) => { throw new Error(`Could not fetch node info: ${err}`) });
   console.log('Node Info: ', nodeInfo);
 
   // 3.1 Query latest block
   const blocksLatest = await web3.eth.getBlock("latest")
-    .catch((err) => { throw new Error(`Could not fetch latest block: ${err}`); });
+    .catch((err) => { throw new Error(`Could not fetch latest block: ${err}`) });
   console.log('Latest block: ', blocksLatest);
 
   // 3.2 Block by number, defaults to latest, lets get block 3263105
   const block = await web3.eth.getBlock(3263105)
-    .catch((err) => { throw new Error(`Could not fetch block: ${err}`); });
+    .catch((err) => { throw new Error(`Could not fetch block: ${err}`) });
   console.log('Block: ', block);
+
+  // 4. Get transactions count
+  const transactionCount = await web3.eth.getTransactionCount(account.address)
+    .catch((err) => { throw new Error(`Could not fetch transaction count: ${err}`) });
+  console.log('Transaction Count: ', transactionCount);
+
+  // 5.Estimate gas cost
+  const gasEstimate = await web3.eth.estimateGas({
+    to: account.address,
+    data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
+  }).catch((err) => { throw new Error(`Could not estimate gas: ${err}`) });
+  console.log('Gas estimate: ', gasEstimate);
 };
 
 main().catch((err) => {

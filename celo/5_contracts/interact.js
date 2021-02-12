@@ -12,7 +12,7 @@ const main = async () => {
   // Initialize account from our private key
   const account = web3.eth.accounts.privateKeyToAccount(process.env.PRIVATE_KEY);
 
-  // We need to add address to ContractKit in order to sign transactions
+  // We need to add private key to ContractKit in order to sign transactions
   client.addAccount(account.privateKey);
 
   // Check the Celo network ID
@@ -21,10 +21,14 @@ const main = async () => {
   // Get the contract associated with the current network
   const deployedNetwork = MetaCoin.networks[networkId];
 
+  if (!deployedNetwork) {
+    throw new Error(`${networkId} is not valid`);
+  }
+
   // Create a new contract instance with the MetaCoin contract info
   let instance = new web3.eth.Contract(
     MetaCoin.abi,
-    deployedNetwork && deployedNetwork.address
+    deployedNetwork.address
   );
 
   // Get balance
