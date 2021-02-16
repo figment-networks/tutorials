@@ -7,4 +7,5 @@ blockchains during our Figment Learn tutorials.
 
 - [Terra](/terra)
 - [Near](/near)
+- [Celo](/celo)
 - [Secret Network](/secret)
