@@ -1,0 +1,22 @@
+{
+  "name": "avalanche-pathway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "1": "node 1_connect_to_node/main.js",
+    "2": "node 2_create_account/main.js",
+    "3": "node 3_query_node/main.js",
+    "4": "node 4_send_transaction/main.js",
+    "5": "node 5_interchain_swap/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "avalanche": "^3.2.0",
+    "dotenv": "^8.2.0",
+    "web3": "^1.3.4",
+    "web3-eth": "^1.3.4"
+  }
+}
