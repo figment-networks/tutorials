@@ -1,9 +1,6 @@
 const fs = require("fs")
 
-// Load environment variables
-require("dotenv").config()
-
-// Load Avalanche SDK components
+// Load Avalanche client helper
 const initAvalanche = require("../init")
 
 // Path where we will keep the credentials for the pathway

@@ -1,7 +1,4 @@
-// Load environment variables
-require("dotenv").config()
-
-// Load Avalanche SDK components
+// Load Avalanche client helper
 const initAvalanche = require("../init")
 
 async function main() {

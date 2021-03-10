@@ -1,3 +1,7 @@
+// Load environment variables
+require("dotenv").config()
+
+
 // Load Avalanche SDK components
 const { Avalanche } = require("avalanche")
 

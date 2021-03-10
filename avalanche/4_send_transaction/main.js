@@ -1,6 +1,3 @@
-// Load environment variables
-require("dotenv").config()
-
 // Load libraries and helpers
 const fs = require("fs")
 const avalanche = require("avalanche")
