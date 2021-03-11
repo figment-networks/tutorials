@@ -1,11 +1,7 @@
-const fs = require("fs")
-
 // Load Avalanche client helper
-const initAvalanche = require("../init")
+const client = require("../client")
 
 async function main() {
-  const client = initAvalanche()
-
   await queryInfo(client.Info())
   await queryPChain(client.PChain())
   await queryXChain(client.XChain())

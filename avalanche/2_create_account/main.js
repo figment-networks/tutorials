@@ -1,15 +1,12 @@
 const fs = require("fs")
 
 // Load Avalanche client helper
-const initAvalanche = require("../init")
+const client = require("../client")
 
 // Path where we will keep the credentials for the pathway
 const credentialsPath = "./credentials"
 
 async function main() {
-  // Initialize the main client
-  const client = initAvalanche()
-
   // Initialize the X-Chain client
   const chain = client.XChain()
   const keyChain = chain.keyChain()
@@ -29,8 +26,8 @@ async function main() {
 
   console.log("Loading credentials into keychain...")
   const data = JSON.parse(fs.readFileSync(keyPath))
-  const key = keyChain.importKey(data.privkey)
 
+  const key = keyChain.importKey(data.privkey)
   console.log("Imported X-chain address:", key.getAddressString())
 
   console.log("Fetching address balances...")

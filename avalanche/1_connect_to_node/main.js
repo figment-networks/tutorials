@@ -1,9 +1,8 @@
 // Load Avalanche client helper
-const initAvalanche = require("../init")
+const client = require("../client")
 
 async function main() {
-  // Initialize the main client and clients for individual APIs
-  const client = initAvalanche()
+  // Initialize the Info API client
   const info = client.Info()
 
   console.log("Fetching network information...")

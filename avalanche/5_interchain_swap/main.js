@@ -2,15 +2,12 @@
 const fs = require("fs")
 const avalanche = require("avalanche")
 const Web3 = require("web3")
-const initAvalanche = require("../init")
+const client = require("../client")
 
 // Path where we keep the credentials for the pathway
 const credentialsPath = "./credentials"
 
 async function main() {
-  // Initialize avalanche components
-  const client = initAvalanche()
-
   // Initialize chain components
   const xChain = client.XChain()
   const xKeychain = xChain.keyChain()
@@ -27,7 +24,7 @@ async function main() {
   if (!fs.existsSync(`${credentialsPath}/c-chain.json`)) {
     console.log("Creating a new Etherium address for C-Chain...")
     account = (new Web3()).eth.accounts.create()
-    console.log("Create a new C-Chain address:", account.address)
+    console.log("C-Chain Eth address:", account.address)
 
     fs.writeFileSync(`${credentialsPath}/c-chain.json`, JSON.stringify({
       address: account.address,
@@ -35,15 +32,16 @@ async function main() {
     }))
   } else {
     account = JSON.parse(fs.readFileSync(`${credentialsPath}/c-chain.json`))
+    console.log("Loaded C-Chain Eth address:", account.address)
   }
 
   // Create a X->C export transaction
   await createExport(client, xChain, xKeychain, cKeychain)
 
-  // Add some delay to let the transaction clear first
+  // Add some delay to let the transaction clear first, then perform the import
   setTimeout(async function() {
     await createImport(client, cChain, cKeychain, account.address)
-  }, 2000)
+  }, 3000)
 }
 
 async function createExport(client, xChain, xKeychain, cKeychain) {
@@ -61,7 +59,7 @@ async function createExport(client, xChain, xKeychain, cKeychain) {
 
   // Fetch current balance
   let balance = await xChain.getBalance(addresses[0], assetID)
-  console.log("Current X-chain balance:", balance)
+  console.log("Current X-Chain balance:", balance)
 
   // Get the real ID for the destination chain
   const destinationChain = await client.Info().getBlockchainID("C")
@@ -78,7 +76,7 @@ async function createExport(client, xChain, xKeychain, cKeychain) {
 
   // Sign and send the transaction
   const exportTxID = await xChain.issueTx(exportTx.sign(xKeychain))
-  console.log("X-chain export TX:", exportTxID)
+  console.log("X-Chain export TX:", exportTxID)
 }
 
 async function createImport(client, cChain, cKeychain, address) {
@@ -99,7 +97,7 @@ async function createImport(client, cChain, cKeychain, address) {
 
   // Sign and send import transaction
   const importTX = await cChain.issueTx(importTx.sign(cKeychain))
-  console.log("C-chain import TX:", importTX)
+  console.log("C-Chain import TX:", importTX)
 
   console.log("----------------------------------------------------------------")
   console.log(`Visit https://cchain.explorer.avax-test.network/address/${address} for balance details`)

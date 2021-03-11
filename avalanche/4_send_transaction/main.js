@@ -1,16 +1,13 @@
 // Load libraries and helpers
 const fs = require("fs")
+const client = require("../client")
 const avalanche = require("avalanche")
-const initAvalanche = require("../init")
+const binTools = avalanche.BinTools.getInstance()
 
 // Path where we keep the credentials for the pathway
 const credentialsPath = "./credentials"
 
 async function main() {
-  // Initialize avalanche components
-  const client = initAvalanche()
-  const binTools = avalanche.BinTools.getInstance()
-
   // Initialize chain components
   const chain = client.XChain()
   const keychain = chain.keyChain()
