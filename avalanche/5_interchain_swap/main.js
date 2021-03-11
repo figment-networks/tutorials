@@ -41,6 +41,10 @@ async function main() {
   // Add some delay to let the transaction clear first, then perform the import
   setTimeout(async function() {
     await createImport(client, cChain, cKeychain, account.address)
+
+    console.log("----------------------------------------------------------------")
+    console.log(`Visit https://cchain.explorer.avax-test.network/address/${account.address} for balance details`)
+    console.log("----------------------------------------------------------------")
   }, 3000)
 }
 
@@ -98,10 +102,6 @@ async function createImport(client, cChain, cKeychain, address) {
   // Sign and send import transaction
   const importTX = await cChain.issueTx(importTx.sign(cKeychain))
   console.log("C-Chain import TX:", importTX)
-
-  console.log("----------------------------------------------------------------")
-  console.log(`Visit https://cchain.explorer.avax-test.network/address/${address} for balance details`)
-  console.log("----------------------------------------------------------------")
 }
 
 main().catch((err) => {
