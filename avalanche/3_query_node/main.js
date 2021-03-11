@@ -2,21 +2,25 @@
 const client = require("../client")
 
 async function main() {
+  console.log("========== Info ==========")
   await queryInfo(client.Info())
+
+  console.log("========== Platform Chain Info ==========")
   await queryPChain(client.PChain())
+
+  console.log("========== Exchange Chain Info ==========")
   await queryXChain(client.XChain())
 }
 
 async function queryInfo(info) {
-  // Fetch blockchain IDs by aliases
-  console.log("========== Chain IDs ==========")
-  console.log("- X:", await info.getBlockchainID("X"))
-  console.log("- P:", await info.getBlockchainID("P"))
-  console.log("- C:", await info.getBlockchainID("C"))
+  console.log("- X:", await info.getBlockchainID("X"), await info.isBootstrapped("X"))
+  console.log("- P:", await info.getBlockchainID("P"), await info.isBootstrapped("P"))
+  console.log("- C:", await info.getBlockchainID("C"), await info.isBootstrapped("C"))
+  console.log("- Fees:", await info.getTxFee())
 }
 
 async function queryPChain(pChain) {
-  console.log("========== Platform Chain Info ==========")
+  
 
   // Fetch validator subnets
   console.log("Fetching validator subnets...")
@@ -49,13 +53,20 @@ async function queryPChain(pChain) {
 }
 
 async function queryXChain(xChain) {
+  // Fetch tx fee
   const fee = await xChain.getDefaultTxFee()
-
-  console.log("========== Exchange Chain Info ==========")
   console.log("Default Fee:", fee.toString(10))
+
+  // Get transaction status
+  const status = await xChain.getTxStatus("2AjbGiRg1KG7FtuJqVEtCzi48n8jpwWdLLYwnBxfFCwMozMLMg")
+  console.log("Transaction status:", status)
+
+  // Get asset balances of an address
+  const balances = await xChain.getAllBalances("X-fuji1h4646056wc84fr7jlmmx7t6u3e348ehwzefl5u")
+  console.log("Balances:", balances)
 }
 
 main().catch((err) => {
   console.log("We have encountered an error!")
-  console.error(err.stack)
+  console.error(err)
 })
