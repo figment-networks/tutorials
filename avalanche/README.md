@@ -15,7 +15,7 @@ Following tutorials are available:
 - [2: Create an account](/avalanche/2_create_account/main.js)
 - [3: Query node](/avalanche/3_query_node/main.js)
 - [4: Send a transaction](/avalanche/4_send_transaction/main.js)
-- [5: Work with contracts](/avalanche/5_interchain_swap/main.js)
+- [5: Cross-chain transfer](/avalanche/5_interchain_swap/main.js)
 
 ## Setup
 
