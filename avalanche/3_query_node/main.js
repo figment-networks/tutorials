@@ -20,8 +20,6 @@ async function queryInfo(info) {
 }
 
 async function queryPChain(pChain) {
-  
-
   // Fetch validator subnets
   console.log("Fetching validator subnets...")
   const subnets = await pChain.getSubnets()
