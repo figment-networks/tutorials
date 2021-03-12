@@ -2,7 +2,8 @@
 const fs = require("fs")
 const client = require("../client")
 const avalanche = require("avalanche")
-const binTools = avalanche.BinTools.getInstance()
+const utils = require("avalanche/utils/bintools")
+const binTools = utils.getInstance()
 
 // Path where we keep the credentials for the pathway
 const credentialsPath = "./credentials"

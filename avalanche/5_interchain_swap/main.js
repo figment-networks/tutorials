@@ -1,8 +1,9 @@
 // Load libraries and helpers
 const fs = require("fs")
 const avalanche = require("avalanche")
-const Web3 = require("web3")
 const client = require("../client")
+const ethUtil = require("ethereumjs-util")
+const binTools = avalanche.BinTools.getInstance()
 
 // Path where we keep the credentials for the pathway
 const credentialsPath = "./credentials"
@@ -19,31 +20,20 @@ async function main() {
   xKeychain.importKey(data.privkey)
   cKeychain.importKey(data.privkey)
 
-  // Load or generate a Etherium-like address/private key
-  let account = null
-  if (!fs.existsSync(`${credentialsPath}/c-chain.json`)) {
-    console.log("Creating a new Etherium address for C-Chain...")
-    account = (new Web3()).eth.accounts.create()
-    console.log("C-Chain Eth address:", account.address)
-
-    fs.writeFileSync(`${credentialsPath}/c-chain.json`, JSON.stringify({
-      address: account.address,
-      privateKey: account.privateKey
-    }))
-  } else {
-    account = JSON.parse(fs.readFileSync(`${credentialsPath}/c-chain.json`))
-    console.log("Loaded C-Chain Eth address:", account.address)
-  }
+  // Derive Eth address from private key
+  const keyBuff = binTools.cb58Decode(data.privkey.split('-')[1])
+  const ethAddr = ethUtil.Address.fromPrivateKey(Buffer.from(keyBuff, "hex")).toString("hex")
+  console.log("Derived Eth address:", ethAddr)
 
   // Create a X->C export transaction
   await createExport(client, xChain, xKeychain, cKeychain)
 
   // Add some delay to let the transaction clear first, then perform the import
   setTimeout(async function() {
-    await createImport(client, cChain, cKeychain, account.address)
+    await createImport(client, cChain, cKeychain, ethAddr)
 
     console.log("----------------------------------------------------------------")
-    console.log(`Visit https://cchain.explorer.avax-test.network/address/${account.address} for balance details`)
+    console.log(`Visit https://cchain.explorer.avax-test.network/address/${ethAddr} for balance details`)
     console.log("----------------------------------------------------------------")
   }, 3000)
 }
@@ -62,7 +52,7 @@ async function createExport(client, xChain, xKeychain, cKeychain) {
   const assetID = avalanche.BinTools.getInstance().cb58Encode(assetInfo.assetID)
 
   // Fetch current balance
-  let balance = await xChain.getBalance(addresses[0], assetID)
+  let  { balance } = await xChain.getBalance(addresses[0], assetID)
   console.log("Current X-Chain balance:", balance)
 
   // Get the real ID for the destination chain
@@ -81,6 +71,7 @@ async function createExport(client, xChain, xKeychain, cKeychain) {
   // Sign and send the transaction
   const exportTxID = await xChain.issueTx(exportTx.sign(xKeychain))
   console.log("X-Chain export TX:", exportTxID)
+  console.log(` - https://explorer.avax-test.network/tx/${exportTxID}`)
 }
 
 async function createImport(client, cChain, cKeychain, address) {
@@ -102,9 +93,10 @@ async function createImport(client, cChain, cKeychain, address) {
   // Sign and send import transaction
   const importTX = await cChain.issueTx(importTx.sign(cKeychain))
   console.log("C-Chain import TX:", importTX)
+  console.log(` - https://explorer.avax-test.network/tx/${importTX}`)
 }
 
 main().catch((err) => {
   console.log("We have encountered an error!")
-  console.error(err.stack)
+  console.error(err)
 })
