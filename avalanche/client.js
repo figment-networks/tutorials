@@ -22,6 +22,6 @@ const client = new Avalanche(
 )
 
 // Apply DataHub API authentication token
-client.setHeader("Authorization", process.env.NODE_API_KEY)
+client.setAuthToken(process.env.NODE_API_KEY)
 
 module.exports = client
