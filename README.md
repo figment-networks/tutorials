@@ -9,3 +9,4 @@ blockchains during our Figment Learn tutorials.
 - [Near](/near)
 - [Celo](/celo)
 - [Secret Network](/secret)
+- [Avalanche](/avalanche)
