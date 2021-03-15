@@ -1,0 +1,28 @@
+[package]
+name = "escrow"
+version = "0.1.0"
+authors = ["Your Name <email@example.com>"]
+# Rust language edition
+edition = "2018"
+
+# A Rust project can be compiled as a lib or as an executable. Smart contract are not
+# executable - it's a library code run by the NEAR WASM runtime. The instructions below
+# instruments cargo to produce a static library.
+# More information: https://doc.rust-lang.org/reference/linkage.html
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+# Here we list dependencies. near-sdk will already provide us everything we need to build
+# a smart contract
+[dependencies]
+# always use the latest near-sdk version. You can find more about the SDK and it's version
+# in rust crates: https://lib.rs/crates/near-sdk
+near-sdk = "2.0.1"
+
+# compilation profile for a release target
+[profile.release]
+codegen-units = 1
+# link time optimization
+lto = true
+debug = false
+panic = "abort"

@@ -1,7 +1,7 @@
 node_modules
 credentials
 build
+target
 neardev
 .env
 *.wasm
-
